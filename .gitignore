@@ -1,0 +1,14 @@
+Thumbs.db
+.DS_Store
+.gradle
+build/
+micronaut-graphql-service/target/
+out/
+.idea
+.mvn
+*.iml
+*.ipr
+*.iws
+.project
+.settings
+.classpath
