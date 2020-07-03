@@ -6,7 +6,7 @@
   <version>0.1</version>
 
   <parent>
-    <groupId>org.tigz</groupId>
+    <groupId>com.tigz</groupId>
     <artifactId>micronaut-graphql-arango-parent</artifactId>
     <version>0.1</version>
     <relativePath>../pom.xml</relativePath>
@@ -69,12 +69,6 @@
     <dependency>
       <groupId>io.micronaut.graphql</groupId>
       <artifactId>micronaut-graphql</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>io.leangen.graphql</groupId>
-      <artifactId>spqr</artifactId>
-      <version>0.10.1</version>
       <scope>compile</scope>
     </dependency>
     <dependency>

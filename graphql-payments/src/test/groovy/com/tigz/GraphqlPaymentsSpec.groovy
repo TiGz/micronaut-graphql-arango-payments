@@ -1,5 +1,6 @@
 package com.tigz
 
+import graphql.GraphQL
 import io.micronaut.runtime.EmbeddedApplication
 import io.micronaut.test.annotation.MicronautTest
 import spock.lang.Specification
@@ -14,6 +15,8 @@ class GraphqlPaymentsSpec extends Specification {
     void 'test it works'() {
         expect:
         application.running
+        application.applicationContext.findBean(GraphQL.class).isPresent()
+
     }
 
 }

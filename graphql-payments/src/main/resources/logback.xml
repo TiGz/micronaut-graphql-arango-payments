@@ -9,6 +9,9 @@
         </encoder>
     </appender>
 
+    <logger name="com.tigz" level="debug" />
+    <logger name="io.micronaut.graphql" level="debug" />
+
     <root level="info">
         <appender-ref ref="STDOUT" />
     </root>
