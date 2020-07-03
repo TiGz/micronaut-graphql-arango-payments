@@ -2,8 +2,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>org.tigz.micronaut-graphql-arango</groupId>
-  <artifactId>micronaut-graphql-service</artifactId>
+  <groupId>com.tigz</groupId>
+  <artifactId>graphql-payments</artifactId>
   <version>0.1</version>
 
   <parent>
@@ -19,7 +19,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <micronaut.version>2.0.0</micronaut.version>
-    <exec.mainClass>org.tigz.payments.Application</exec.mainClass>
+    <exec.mainClass>com.tigz.Application</exec.mainClass>
     <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
     <maven-failsafe-plugin.version>2.22.2</maven-failsafe-plugin.version>
   </properties>
@@ -77,6 +77,11 @@
     <dependency>
       <groupId>javax.annotation</groupId>
       <artifactId>javax.annotation-api</artifactId>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.micronaut.security</groupId>
+      <artifactId>micronaut-security</artifactId>
       <scope>compile</scope>
     </dependency>
     <dependency>
@@ -180,8 +185,8 @@
             </path>
           </annotationProcessorPaths>
           <compilerArgs>
-            <arg>-Amicronaut.processing.group=org.tigz</arg>
-            <arg>-Amicronaut.processing.module=micronaut-graphql-arango-payments</arg>
+            <arg>-Amicronaut.processing.group=com.tigz</arg>
+            <arg>-Amicronaut.processing.module=graphql-payments</arg>
           </compilerArgs>
         </configuration>
         <executions>

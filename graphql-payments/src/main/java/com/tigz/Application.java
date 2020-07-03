@@ -1,4 +1,4 @@
-package org.tigz.payments;
+package com.tigz;
 
 import io.micronaut.runtime.Micronaut;
 

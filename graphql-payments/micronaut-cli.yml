@@ -1,0 +1,6 @@
+applicationType: default
+defaultPackage: com.tigz
+testFramework: spock
+sourceLanguage: java
+buildTool: maven
+features: [annotation-api, app-name, docker, file-watch, graalvm, graphql, http-client, java, java-application, logback, maven, netty-server, readme, security, security-annotations, security-jwt, shade, spock, testcontainers, yaml]

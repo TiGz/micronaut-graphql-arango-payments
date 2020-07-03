@@ -1,4 +1,4 @@
-package org.tigz.payments
+package com.tigz
 
 import io.micronaut.runtime.EmbeddedApplication
 import io.micronaut.test.annotation.MicronautTest
@@ -6,7 +6,7 @@ import spock.lang.Specification
 import javax.inject.Inject
 
 @MicronautTest
-class MicronautGraphqlArangoPaymentsSpec extends Specification {
+class GraphqlPaymentsSpec extends Specification {
 
     @Inject
     EmbeddedApplication application
