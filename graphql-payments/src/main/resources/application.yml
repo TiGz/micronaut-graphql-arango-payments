@@ -8,4 +8,14 @@ micronaut:
         signatures:
           secret:
             generator:
-              secret: '"${JWT_GENERATOR_SIGNATURE_SECRET:pleaseChangeThisSecretForANewOne}"'
+              secret: '"${JWT_GENERATOR_SIGNATURE_SECRET:somesecret}"'
+
+graphql:
+  enabled: true
+  path: /graphql
+
+  graphiql:
+    enabled: true
+    path: /graphiql
+    template-parameters:
+    page-title: GraphQL Payments

@@ -1,6 +1,6 @@
 # Micronaut GraphQL Arango Payments
-An exploration into building a payout based payments system with a [GraphQL](https://graphql.org) 
-interface and backed by an [ArangoDB](https://www.arangodb.com) multi-model database.
+An exploration into the viability of building a payout based payments system 
+with a [GraphQL](https://graphql.org) interface and backed by an [ArangoDB](https://www.arangodb.com) multi-model database.
 
 ## Micronaut Bootstrap
 I used the [Micronaut Launch](https://micronaut.io/launch/) tool to generate the 
