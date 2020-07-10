@@ -28,3 +28,11 @@ To clean up the container and delete apps/data use:
     
 ## Build the Micronaut Service into a docker image running GraalVM
 
+    mvn clean install
+    
+## Deploy the Foxx Microservice into ArangoDB
+
+    ./graphql-payment-foxx/redeploy.sh
+    
+        
+

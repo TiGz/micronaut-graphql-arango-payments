@@ -1,6 +1,7 @@
 package com.tigz.users.repository;
 
 import com.tigz.users.domain.User;
+import io.micronaut.configuration.arango.condition.RequiresArango;
 
 import javax.inject.Singleton;
 import java.util.LinkedHashMap;

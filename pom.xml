@@ -17,6 +17,7 @@
 
     <modules>
         <module>graphql-payments</module>
+        <module>graphql-payments-foxx</module>
     </modules>
 
     <properties>

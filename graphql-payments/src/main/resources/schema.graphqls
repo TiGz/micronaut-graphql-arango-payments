@@ -1,8 +1,14 @@
 type Query {
+
+    # User Queries
+
+    # Fetch ALL users
     users: [User!]!
 }
 
 type Mutation {
+
+    # User Mutations
     createUser(name: String!, provider: String!, userXid: String!): User
     updateUser(userId: ID!, name: String): Boolean!
     deleteUser(userId: ID!): Boolean!
@@ -10,6 +16,13 @@ type Mutation {
 
 type User {
     userId: ID!
+    name: String!
+    provider: String!
+    userXid: String!
+}
+
+type Entity {
+    entityId: ID!
     name: String!
     provider: String!
     userXid: String!

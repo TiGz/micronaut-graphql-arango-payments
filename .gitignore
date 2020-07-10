@@ -2,7 +2,7 @@ Thumbs.db
 .DS_Store
 .gradle
 build/
-micronaut-graphql-service/target/
+**/target/
 out/
 .idea
 .mvn
