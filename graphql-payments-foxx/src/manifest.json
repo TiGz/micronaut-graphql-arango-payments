@@ -7,7 +7,7 @@
   },
   "author": "Adam Chesney",
   "license": "Apache 2",
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
     "setup": "scripts/setup.js",
     "teardown": "scripts/teardown.js"
