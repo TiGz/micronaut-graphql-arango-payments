@@ -1,6 +1,6 @@
 const gql = require('graphql-sync');
 const dbDriver = require('../../../database/driver');
-const entitySchema = require('./../entity/entityQuery');
+const entitySchema = require('./../entity/entitySchema');
 
 const paymentRequestStatus = new gql.GraphQLEnumType({
    name: 'PaymentRequestStatus',

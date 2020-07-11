@@ -10,6 +10,12 @@ if (graphModule._exists(graphName)) {
 }
 else {
   graphModule._create(graphName, [
+
+    // creating a relation will automatically create the relevant collections
+    // if they do not exist already
+
+    // create the payment_request collection requesting a payment
+    // from one entity to be made to another entity
     graphModule._relation(
       module.context.collectionName('payment_request'),
       [module.context.collectionName('entity')],
@@ -51,7 +57,8 @@ else {
     _from: entity3._id,
     _to: entity1._id,
     amount: 12000,
-    currency: "USD"
+    currency: "USD",
+    status: "submitted"
   });
 
   // Sam Smith would like to pay £60 to Widgets Inc
@@ -59,7 +66,8 @@ else {
     _from: entity2._id,
     _to: entity4._id,
     amount: 6000,
-    currency: "GBP"
+    currency: "GBP",
+    status: "submitted"
   });
 
   // Acme Corp would like to pay $30 to Sam Smith
@@ -67,7 +75,8 @@ else {
     _from: entity3._id,
     _to: entity2._id,
     amount: 3000,
-    currency: "USD"
+    currency: "USD",
+    status: "submitted"
   });
 
   // Widgets Inc would like to pay $4000 to Acme Corporation
@@ -75,7 +84,8 @@ else {
     _from: entity4._id,
     _to: entity3._id,
     amount: 40000,
-    currency: "USD"
+    currency: "USD",
+    status: "submitted"
   });
 
   // Sam Smith would like to pay £90 to Joe Bloggs
@@ -83,7 +93,8 @@ else {
     _from: entity2._id,
     _to: entity1._id,
     amount: 9000,
-    currency: "GBP"
+    currency: "GBP",
+    status: "submitted"
   });
 
   // Acme Corp would like to pay EUR2050 to Widgets Inc
@@ -91,7 +102,8 @@ else {
     _from: entity3._id,
     _to: entity4._id,
     amount: 205000,
-    currency: "EUR"
+    currency: "EUR",
+    status: "submitted"
   });
 
 
