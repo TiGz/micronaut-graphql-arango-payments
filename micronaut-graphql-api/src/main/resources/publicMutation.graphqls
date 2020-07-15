@@ -1,0 +1,27 @@
+
+
+type Query {
+    # Query must be defined but is empty for the mutation schemas
+}
+
+type Mutation {
+
+    # User Mutations
+    createUser(name: String!, provider: String!, userXid: String!): User
+    updateUser(userId: ID!, name: String): Boolean!
+    deleteUser(userId: ID!): Boolean!
+}
+
+type User {
+    userId: ID!
+    name: String!
+    provider: String!
+    userXid: String!
+}
+
+type Entity {
+    entityId: ID!
+    name: String!
+    provider: String!
+    userXid: String!
+}

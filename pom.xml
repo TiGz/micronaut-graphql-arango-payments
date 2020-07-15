@@ -16,8 +16,8 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>graphql-payments</module>
-        <module>graphql-payments-foxx</module>
+        <module>micronaut-graphql-api</module>
+        <module>foxx-public-query-service</module>
     </modules>
 
     <properties>

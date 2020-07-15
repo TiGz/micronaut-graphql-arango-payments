@@ -1,0 +1,38 @@
+micronaut:
+  application:
+    name: graphqlPayments
+  security:
+    enabled: false
+    authentication: bearer
+    token:
+      jwt:
+        signatures:
+          secret:
+            generator:
+              secret: '"${JWT_GENERATOR_SIGNATURE_SECRET:somesecret}"'
+
+arangodb:
+  host: localhost                   # default
+  port: 8529                        # default
+  database: _system                 # default
+  user: root                        # default
+  password: rootpassword            # or no pass if auth is not required
+  createDatabaseIfNotExist: false   # default - false
+
+  servicePaths:
+    # Proxied from /api/public/query
+    publicGraphqlQuery: /_db/_system/public/query/graphql
+
+# We have 2 public GraphQL Schemas
+# The Mutation Schema is handled inside micronaut via graphql-java
+# The Query Schema is proxied through to Arango DB Foxx microservice
+
+graphql:
+  enabled: true
+  path: /api/public/mutation/graphql
+
+  graphiql:
+    enabled: true
+    path: /api/public/mutation/graphiql
+    template-parameters:
+    page-title: Payment Mutations

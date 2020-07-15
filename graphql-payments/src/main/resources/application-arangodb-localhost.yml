@@ -1,7 +1,0 @@
-arangodb:
-  host: localhost                   # default
-  port: 8529                        # default
-  database: payments                # default
-  user: root                        # default
-  password: rootpassword            # or no pass if auth is not required
-  createDatabaseIfNotExist: true    # default - false

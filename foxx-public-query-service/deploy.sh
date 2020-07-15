@@ -1,0 +1,2 @@
+SCRIPTPATH="$( cd "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
+curl -X POST -H "Authorization: Basic cm9vdDpyb290cGFzc3dvcmQ=" -T "$SCRIPTPATH/target/foxx-public-query-service-0.1.zip" http://localhost:8529/_db/_system/_api/foxx?mount=/public/query

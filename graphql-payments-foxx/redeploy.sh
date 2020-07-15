@@ -1,2 +1,0 @@
-SCRIPTPATH="$( cd "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
-curl -X PUT -H "Authorization: Basic cm9vdDpyb290cGFzc3dvcmQ=" -T "$SCRIPTPATH/target/graphql-payments-foxx-0.1.zip" http://localhost:8529/_db/_system/_api/foxx/service?mount=/payments&force=true
