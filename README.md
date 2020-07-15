@@ -1,6 +1,35 @@
-# Micronaut GraphQL Arango Payments
-An exploration into the viability of building a payout based payments system 
-with a [GraphQL](https://graphql.org) interface and backed by an [ArangoDB](https://www.arangodb.com) multi-model database.
+## Micronaut GraphQL Arango Payments
+
+This is an exploration/poc project and has 2 main purposes:
+
+1) Build a solid [GraphQL](https://graphql.org) API Gateway that can handle mutations directly and proxy queries into [ArangoDB](https://www.arangodb.com) multi-model database
+2) Explore how a Payout/Payments API could look if implemented in [GraphQL](https://graphql.org)
+
+### GraphQL API Gateway backed by ArangoDB
+
+The Micronaut service is exposing 2 endpoints that make up the GraphQL API:
+
+#### /api/public/query/graphql
+
+This is the Query endpoint which will authenticate and authorize the invoker (@TODO) before 
+forwarding the query into a Foxx microservice which is running inside the ArangoDB instance.
+The reason we do this is that the real power of GraphQL can be used while minimising the
+network hops to resolve all the leaf fetch operations that might be required to satisfy a
+particular query.
+
+#### /api/public/mutation/graphql
+
+This is the Mutation endpoint and it exposes the mutations (updates to the system) allowed by 
+the public clients (assuming they invoker has the required permissions)
+
+Each mutation request is handled in the Java layer and can be handled directly
+or proxied out to another service or could be raised as an asynchronous event (event sourcing).
+
+### Why use GraphQL?
+This is a good article that explains why GraphQL could be a better way of exposing an API:
+
+https://www.altexsoft.com/blog/engineering/graphql-core-features-architecture-pros-and-cons/
+
 
 ## Micronaut Bootstrap
 I used the [Micronaut Launch](https://micronaut.io/launch/) tool to generate the 
