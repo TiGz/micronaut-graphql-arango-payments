@@ -1,27 +1,24 @@
+#
+# This file defines all of the input operations (mutations)
+#
+# Each mutation is handled by a specific DataFetcher defined as a Java class
+#
 
+
+type Mutation {
+
+    # Create a new Person Entity in the system - returns the entityId of the newly created person
+    createPersonEntity(name: String!, publicEmail: String!, countryCode: String!, dob: String!): String!
+
+    # Create a new Company Entity in the system - returns the entityId of the newly created company
+    createCompanyEntity(name: String!, publicEmail: String!, countryCode: String!): String!
+}
 
 type Query {
     # Query must be defined but is empty for the mutation schemas
 }
 
-type Mutation {
-
-    # User Mutations
-    createUser(name: String!, provider: String!, userXid: String!): User
-    updateUser(userId: ID!, name: String): Boolean!
-    deleteUser(userId: ID!): Boolean!
-}
-
-type User {
-    userId: ID!
-    name: String!
-    provider: String!
-    userXid: String!
-}
-
-type Entity {
-    entityId: ID!
-    name: String!
-    provider: String!
-    userXid: String!
+schema {
+  query: Query
+  mutation: Mutation
 }

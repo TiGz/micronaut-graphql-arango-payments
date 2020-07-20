@@ -1,17 +1,17 @@
 const db = require('@arangodb').db;
 const graphModule =  require('@arangodb/general-graph');
 
-const paymentsGraphName = module.context.collectionName('payments');
+const paymentsGraphName = 'payments';
 const paymentsGraph = graphModule._graph(paymentsGraphName);
 
-const entityItems = paymentsGraph[module.context.collectionName('entity')];
-const paymentRequestItems = paymentsGraph[module.context.collectionName('payment_request')];
+const entityItems = paymentsGraph['entity'];
+const paymentRequestItems = paymentsGraph['payment_request'];
 
 //const accountItems = paymentsGraph[module.context.collectionName('account')];
 //const paymentItems = paymentsGraph[module.context.collectionName('payment')];
 
-const currencyItems = module.context.collection('currency');
-const countryItems = module.context.collection('country');
+const currencyItems = db._collection('currency');
+const countryItems = db._collection('country');
 
 console.log("Exporting db driver items...")
 

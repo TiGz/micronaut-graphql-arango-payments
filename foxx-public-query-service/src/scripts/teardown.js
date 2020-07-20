@@ -12,8 +12,7 @@ const collections = [
 ];
 
 for (const localName of collections) {
-  const qualifiedName = module.context.collectionName(localName);
-  db._drop(qualifiedName);
+  db._drop(localName);
 }
-const graphName = module.context.collectionName('payments');
+const graphName = 'payments';
 graphModule._drop(graphName);

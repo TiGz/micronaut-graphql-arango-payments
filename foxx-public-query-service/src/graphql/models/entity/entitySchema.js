@@ -1,5 +1,6 @@
 const gql = require('graphql-sync');
 const dbDriver = require('../../../database/driver');
+const countrySchema = require('./../country/countrySchema');
 
 const typeOfEntity = new gql.GraphQLEnumType({
    name: 'TypeOfEntity',
@@ -29,13 +30,24 @@ module.exports = {
             entityId: {
               type: new gql.GraphQLNonNull(gql.GraphQLString),
               description: 'The internal id of the entity',
-              resolve(country) {
-                return country._key;
+              resolve(entity) {
+                return entity._key;
               },
             },
             name: {
               type: new gql.GraphQLNonNull(gql.GraphQLString),
               description: 'The name of the person or company',
+            },
+            publicEmail: {
+              type: new gql.GraphQLNonNull(gql.GraphQLString),
+              description: 'The public email address of the person or company - allows searching for people/companies',
+            },
+            country: {
+              type: countrySchema.Country,
+              description: 'The country of origin for the person or company',
+              resolve(entity) {
+                return dbDriver.countryItems.document(entity.countryCode);
+              },
             },
             type: {
               type: new gql.GraphQLNonNull(typeOfEntity),
