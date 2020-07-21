@@ -110,6 +110,7 @@ else {
   paymentRequestCollection.insert({
     _from: entity3._id,
     _to: entity1._id,
+    submittedAt: "2020-07-21T16:27:18Z",
     amount: 12000,
     currency: "USD",
     paymentReference: "invoice1234-1",
@@ -122,6 +123,7 @@ else {
   paymentRequestCollection.insert({
     _from: entity2._id,
     _to: entity4._id,
+    submittedAt: "2020-07-21T16:27:18Z",
     amount: 6000,
     currency: "GBP",
     paymentReference: "invoice1234-2",
@@ -135,6 +137,7 @@ else {
     _from: entity3._id,
     _to: entity2._id,
     onBehalfOfEntityId: entity4._id,
+    submittedAt: "2020-07-21T16:27:18Z",
     amount: 3000,
     currency: "USD",
     paymentReference: "invoice1234-3",
@@ -147,12 +150,13 @@ else {
   paymentRequestCollection.insert({
     _from: entity4._id,
     _to: entity3._id,
+    submittedAt: "2020-07-21T16:27:18Z",
     amount: 40000,
     currency: "USD",
     paymentReference: "invoice1234-4",
     memo: "Invoice from Acme Corp for services rendered",
     transmissionHint: "fastest",
-    desiredArrivalDateTime: "2020-07-21T16:27:18Z",
+    desiredArrivalDateTime: "2020-08-21T16:27:18Z",
     status: "submitted"
   });
 
@@ -160,6 +164,7 @@ else {
   paymentRequestCollection.insert({
     _from: entity2._id,
     _to: entity1._id,
+    submittedAt: "2020-07-21T16:27:18Z",
     amount: 9000,
     currency: "GBP",
     paymentReference: "invoice1234-5",
@@ -172,6 +177,7 @@ else {
   paymentRequestCollection.insert({
     _from: entity3._id,
     _to: entity4._id,
+    submittedAt: "2020-07-21T16:27:18Z",
     amount: 205000,
     currency: "EUR",
     paymentReference: "invoice1234-6",

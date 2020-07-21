@@ -14,6 +14,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.inject.Singleton;
+import java.time.OffsetDateTime;
+import java.time.ZoneId;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -32,6 +34,7 @@ public class CreatePersonEntityMutation implements PublicMutationDataFetcher<Str
         String entityId = UUID.randomUUID().toString();
         HashMap<String, Object> doc = new HashMap<>(env.getArguments());
         doc.put("type", "person");
+        doc.put("createdAt", OffsetDateTime.now(ZoneId.of("UTC")).toString());
 
         // create doc using our own key
         BaseDocument entity = new BaseDocument(entityId);

@@ -1,6 +1,7 @@
 const gql = require('graphql-sync');
 const dbDriver = require('../../../database/driver');
 const entitySchema = require('./../entity/entitySchema');
+const currencySchema = require('./../currency/currencySchema');
 
 const paymentRequestStatus = new gql.GraphQLEnumType({
    name: 'PaymentRequestStatus',
@@ -80,13 +81,20 @@ module.exports = {
                 }
               },
             },
+            submittedAt: {
+              type: new gql.GraphQLNonNull(gql.GraphQLString),
+              description: 'The timestamp that the payment request was submitted'
+            },
             amount: {
               type: new gql.GraphQLNonNull(gql.GraphQLInt),
               description: 'The amount of the payment in minor units as an integer',
             },
             currency: {
-              type: new gql.GraphQLNonNull(gql.GraphQLString),
-              description: 'The currency of the desired amount for the payment'
+              type: new gql.GraphQLNonNull(currencySchema.Currency),
+              description: 'The currency of the desired amount for the payment',
+              resolve(paymentRequest) {
+                return dbDriver.currencyItems.document(paymentRequest.currency);
+              },
             },
             paymentReference: {
               type: new gql.GraphQLNonNull(gql.GraphQLString),
