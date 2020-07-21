@@ -1,6 +1,6 @@
 package com.tigz.graphql.query.proxy;
 
-import com.tigz.properties.ArangoProperties;
+import com.tigz.arango.properties.ArangoProperties;
 import io.micronaut.core.async.publisher.Publishers;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.http.HttpRequest;

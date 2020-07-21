@@ -1,6 +1,14 @@
 'use strict';
 const db = require('@arangodb').db;
 
+// create mutation_log collection for outbox pattern and audit trail
+  const mutationLogCollection = 'mutation_log';
+  if (!db._collection(mutationLogCollection)) {
+    db._createDocumentCollection(mutationLogCollection);
+  } else if (module.context.isProduction) {
+    console.warn(`collection ${mutationLogCollection} already exists. Leaving it untouched.`);
+  }
+
 // populate our country collection
   const countryCollectionName = 'country';
   if (!db._collection(countryCollectionName)) {
@@ -104,6 +112,9 @@ else {
     _to: entity1._id,
     amount: 12000,
     currency: "USD",
+    paymentReference: "invoice1234-1",
+    memo: "Invoice from Joe Bloggs re: some chickens",
+    transmissionHint: "lowest_cost",
     status: "submitted"
   });
 
@@ -113,15 +124,22 @@ else {
     _to: entity4._id,
     amount: 6000,
     currency: "GBP",
+    paymentReference: "invoice1234-2",
+    memo: "Invoice from Sam Smite - app revenue",
+    transmissionHint: "balanced",
     status: "submitted"
   });
 
-  // Acme Corp would like to pay $30 to Sam Smith
+  // Acme Corp would like to pay $30 to Sam Smith on Behalf of Widgets Inc
   paymentRequestCollection.insert({
     _from: entity3._id,
     _to: entity2._id,
+    onBehalfOfEntityId: entity4._id,
     amount: 3000,
     currency: "USD",
+    paymentReference: "invoice1234-3",
+    memo: "Paying Sam Smith $30 for some nice earrings on behalf of Widgets Inc",
+    transmissionHint: "lowest_cost",
     status: "submitted"
   });
 
@@ -131,6 +149,10 @@ else {
     _to: entity3._id,
     amount: 40000,
     currency: "USD",
+    paymentReference: "invoice1234-4",
+    memo: "Invoice from Acme Corp for services rendered",
+    transmissionHint: "fastest",
+    desiredArrivalDateTime: "2020-07-21T16:27:18Z",
     status: "submitted"
   });
 
@@ -140,6 +162,9 @@ else {
     _to: entity1._id,
     amount: 9000,
     currency: "GBP",
+    paymentReference: "invoice1234-5",
+    memo: "Sam Smith would like to pay £90 to Joe Bloggs",
+    transmissionHint: "lowest_cost",
     status: "submitted"
   });
 
@@ -149,6 +174,9 @@ else {
     _to: entity4._id,
     amount: 205000,
     currency: "EUR",
+    paymentReference: "invoice1234-6",
+    memo: "Acme Corp would like to pay EUR2050 to Widgets Inc",
+    transmissionHint: "fastest",
     status: "submitted"
   });
 

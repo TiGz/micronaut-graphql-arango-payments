@@ -14,9 +14,32 @@ const paymentRequestStatus = new gql.GraphQLEnumType({
        value: 'rejected', // The internal value stored in ArangoDB
        description: 'The state if the request is rejected for some reason'
      },
+     CANCELLED: {
+       value: 'cancelled', // The internal value stored in ArangoDB
+       description: 'The state if the request is cancelled by the owner of the request'
+     },
      INSTRUCTED: {
        value: 'instructed', // The internal value stored in ArangoDB
        description: 'A state of the request after it has been instructed'
+     }
+   }
+ });
+
+const paymentTransmissionHint = new gql.GraphQLEnumType({
+   name: 'PaymentTransmissionHint',
+   description: 'A hint to help decide how the payment should be transmitted',
+   values: {
+     LOWEST_COST: {
+       value: 'lowest_cost', // The internal value stored in ArangoDB
+       description: 'Pursue the cheapest rails options at the expense of time spent in transmission.'
+     },
+     BALANCED: {
+       value: 'balanced', // The internal value stored in ArangoDB
+       description: 'Balance time to send versus cost. This is the default option.'
+     },
+     FASTEST: {
+       value: 'fastest', // The internal value stored in ArangoDB
+       description: 'Choose the fastest transmission path possible potentially at additional expense.'
      }
    }
  });
@@ -32,17 +55,29 @@ module.exports = {
         fields() {
           return {
             payor: {
-              type: entitySchema.Entity,
+              type: new gql.GraphQLNonNull(entitySchema.Entity),
               description: 'The entity providing the funds for the payment',
               resolve(paymentRequest) {
                 return dbDriver.entityItems.document(paymentRequest._from);
               },
             },
             payee: {
-              type: entitySchema.Entity,
+              type: new gql.GraphQLNonNull(entitySchema.Entity),
               description: 'The entity receiving the funds of the payment',
               resolve(paymentRequest) {
                 return dbDriver.entityItems.document(paymentRequest._to);
+              },
+            },
+            onBehalfOf: {
+              type: entitySchema.Entity,
+              description: 'Optional entity that the payment appears to come from instead of the payor',
+              resolve(paymentRequest) {
+                if ( paymentRequest.onBehalfOfEntityId != null ){
+                    return dbDriver.entityItems.document(paymentRequest.onBehalfOfEntityId);
+                }
+                else{
+                    return null;
+                }
               },
             },
             amount: {
@@ -53,9 +88,25 @@ module.exports = {
               type: new gql.GraphQLNonNull(gql.GraphQLString),
               description: 'The currency of the desired amount for the payment'
             },
+            paymentReference: {
+              type: new gql.GraphQLNonNull(gql.GraphQLString),
+              description: 'The reference of the payment in the external system (e.g. invoice id etc)'
+            },
+            memo: {
+              type: gql.GraphQLString,
+              description: 'Optional long form arbitrary text attached to this payment'
+            },
+            transmissionHint: {
+              type: new gql.GraphQLNonNull(paymentTransmissionHint),
+              description: 'A hint to help decide how the payment should be transmitted: LOWEST_COST, BALANCED or FASTEST'
+            },
+            desiredArrivalDateTime: {
+              type: gql.GraphQLString,
+              description: 'Optional desired payment arrival date/time'
+            },
             status: {
               type: new gql.GraphQLNonNull(paymentRequestStatus),
-              description: 'The current status of the payment request: SUBMITTED, REJECTED or INSTRUCTED.'
+              description: 'The current status of the payment request: SUBMITTED, REJECTED, CANCELLED or INSTRUCTED.'
             },
             rejectedReason: {
               type: gql.GraphQLString,

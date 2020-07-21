@@ -16,6 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 import javax.inject.Singleton;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -42,10 +43,10 @@ public class PublicMutationGraphQLFactory {
         SchemaParser schemaParser = new SchemaParser();
         SchemaGenerator schemaGenerator = new SchemaGenerator();
 
-        // Parse the schema.
+        // Parse the schemas
         TypeDefinitionRegistry typeRegistry = new TypeDefinitionRegistry();
-        typeRegistry.merge(schemaParser.parse(new BufferedReader(new InputStreamReader(
-                resourceResolver.getResourceAsStream("classpath:publicMutation.graphqls").get()))));
+        typeRegistry.merge(schemaParser.parse(resourceToReader(resourceResolver, "classpath:graphql/mutation/paymentRequest.graphqls")));
+        typeRegistry.merge(schemaParser.parse(resourceToReader(resourceResolver, "classpath:graphql/mutation/root.graphqls")));
 
         Map<String, DataFetcher> mutationFetchers = mutationDataFetchers.stream()
                 .collect(Collectors.toMap(MutationDataFetcher::getName, Function.identity()));
@@ -68,5 +69,9 @@ public class PublicMutationGraphQLFactory {
 
         // Return the GraphQL bean.
         return GraphQL.newGraphQL(graphQLSchema).build();
+    }
+
+    private Reader resourceToReader(ResourceResolver resourceResolver, String path){
+        return new BufferedReader(new InputStreamReader(resourceResolver.getResourceAsStream(path).get()));
     }
 }

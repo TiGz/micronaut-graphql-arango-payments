@@ -1,0 +1,38 @@
+# This file defines our payment request structure
+
+# decide how the payment should be transmitted
+enum PaymentTransmissionHint {
+  LOWEST_COST
+  BALANCED
+  FASTEST
+}
+
+input PaymentRequest {
+
+    # The entityId of the entity funding the payment (payment from)
+    payorEntityId: String!
+
+    # The entityId of the entity that will receive the payment (payment to)
+    payeeEntityId: String!
+
+    # The amount including minor units of the required payment
+    amount: Int!
+
+    # The 3 letter currency code of the required payment
+    currency: String!
+
+    # The reference in the external system for this payment (e.g. invoice id etc)
+    paymentReference: String!
+
+    # Optional long form text to attach to this payment
+    memo: String
+
+    # Optional entityId of the entity that the payment should appear to come from
+    onBehalfOfEntityId: String
+
+    # Decide on speed of payment verses cost of payment (default is BALANCED)
+    transmissionHint: PaymentTransmissionHint = BALANCED
+
+    # Optional desired payment arrival date/time
+    desiredArrivalDateTime: String
+}

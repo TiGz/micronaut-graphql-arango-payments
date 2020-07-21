@@ -1,4 +1,4 @@
-package com.tigz.properties;
+package com.tigz.arango.properties;
 
 import io.micronaut.context.annotation.ConfigurationProperties;
 import lombok.Getter;

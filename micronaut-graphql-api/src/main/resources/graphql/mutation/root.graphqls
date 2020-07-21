@@ -3,8 +3,6 @@
 #
 # Each mutation is handled by a specific DataFetcher defined as a Java class
 #
-
-
 type Mutation {
 
     # Create a new Person Entity in the system - returns the entityId of the newly created person
@@ -12,6 +10,12 @@ type Mutation {
 
     # Create a new Company Entity in the system - returns the entityId of the newly created company
     createCompanyEntity(name: String!, publicEmail: String!, countryCode: String!): String!
+
+    # Request that a payment is submitted (but not yet instructed)
+    submitPaymentRequest(request: PaymentRequest!): String!
+
+    # Submit multiple Payment Requests in one go
+    submitPaymentRequests(requests: [PaymentRequest!]!): [String!]
 }
 
 type Query {
