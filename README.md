@@ -5,7 +5,7 @@ This is an exploration/poc project and has 2 main purposes:
 1) Build a solid [GraphQL](https://graphql.org) API Gateway that can handle mutations directly and proxy queries into [ArangoDB](https://www.arangodb.com) multi-model database
 2) Explore how a Payout/Payments API could look if implemented in [GraphQL](https://graphql.org)
 
-It is an example of GAGA: GraphQL Arango Gateway Architecture
+It is an example of [GAGA: GraphQL Arango Gateway Architecture](GAGA.md)
 
 ### GraphQL API Gateway backed by ArangoDB
 
