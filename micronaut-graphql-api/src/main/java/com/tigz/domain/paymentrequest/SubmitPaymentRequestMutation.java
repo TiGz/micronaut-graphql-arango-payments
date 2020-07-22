@@ -16,6 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 import javax.inject.Singleton;
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -31,7 +32,7 @@ public class SubmitPaymentRequestMutation implements PublicMutationDataFetcher<S
     @Override
     public String get(DataFetchingEnvironment env) throws Exception {
         HashMap<String, Object> requestAttributes = new HashMap<>(env.getArgument("request"));
-        return submitPaymentRequestService.submitPaymentRequest(requestAttributes);
+        return submitPaymentRequestService.submitPaymentRequests(Collections.singletonList(requestAttributes)).get(0);
     }
 
     @Override
