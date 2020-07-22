@@ -31,8 +31,7 @@ public class SubmitPaymentRequestMutation implements PublicMutationDataFetcher<S
     @Override
     public String get(DataFetchingEnvironment env) throws Exception {
         HashMap<String, Object> requestAttributes = new HashMap<>(env.getArgument("request"));
-        PaymentRequest paymentRequest = PaymentRequest.of(requestAttributes);
-        return submitPaymentRequestService.submitPaymentRequest(paymentRequest);
+        return submitPaymentRequestService.submitPaymentRequest(requestAttributes);
     }
 
     @Override

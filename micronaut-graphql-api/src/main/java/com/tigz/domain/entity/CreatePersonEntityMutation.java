@@ -28,6 +28,8 @@ public class CreatePersonEntityMutation implements PublicMutationDataFetcher<Str
     private final ArangoDB arangoDB;
     private final MutationLog mutationLog;
 
+    private final DocumentCreateOptions CREATE_OPTIONS = new DocumentCreateOptions().returnNew(true);
+
     @ArangoStreamTransaction(writeCollections = {"entity","mutation_log"})
     @Override
     public String get(DataFetchingEnvironment env) throws Exception {
@@ -41,7 +43,7 @@ public class CreatePersonEntityMutation implements PublicMutationDataFetcher<Str
         entity.setProperties(doc);
 
         ArangoCollection entities = arangoDB.db().collection(CollectionName.entity.name());
-        DocumentCreateEntity<BaseDocument> created = entities.insertDocument(entity, new DocumentCreateOptions().returnNew(true));
+        DocumentCreateEntity<BaseDocument> created = entities.insertDocument(entity,CREATE_OPTIONS);
 
         log.debug("Added new person entity with entityId: {} and public email: {}", entityId, entity.getAttribute("publicEmail"));
 
