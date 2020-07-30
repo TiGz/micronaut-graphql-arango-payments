@@ -65,11 +65,11 @@ To clean up the container and delete apps/data use:
 
 First time:
 
-    ./graphql-payment-foxx/redeploy.sh
+    ./foxx-public-query-service/redeploy.sh
     
 Subsequently:
 
-    ./graphql-payment-foxx/redeploy.sh
+    ./foxx-public-query-service/redeploy.sh
     
 ### Run the service
 
