@@ -110,4 +110,6 @@ various payment rails for quotes and instruction.
 #### GraphQL Interfaces
 We should be able to expand our types to support polymorphism via GraphQL interfaces.
         
+### Error Handling
 
+Some good context [here](https://blog.atomist.com/error-handling-in-graphql)
