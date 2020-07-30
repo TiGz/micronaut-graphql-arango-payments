@@ -65,7 +65,7 @@ To clean up the container and delete apps/data use:
 
 First time:
 
-    ./foxx-public-query-service/redeploy.sh
+    ./foxx-public-query-service/deploy.sh
     
 Subsequently:
 
