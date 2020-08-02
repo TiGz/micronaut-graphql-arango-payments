@@ -21,7 +21,10 @@ Here is an example of GraphiQL in action with the Github API:
 ![Github GraphiQL Example](https://cdn.netlify.com/eddf10853729b584702312eb5b83d2e9c00e7f30/b5ca8/img/blog/graphiql-example.gif)
 
 ### How GAGA handles the GraphQL query performance problem
-Usually the main problem with building a friendly GraphQL API is that it can be easy to build a schema that allows clients to ask for lots of data that involves lots of leaf fetches. For example, a client might query a list of Payments and for each payment in the result set the client could be asking for details about both the Person receiving the Payment and the Company sending the payment. Usually this would mean that the GraphQL application layer would first query the database for the list of Payments and would then iterate through the list and make a sebsequent query into the database for each Person and for each Company. This can easily lead to an explosion of network round trips, elongated search times and can really hurt performance and scalability.
+Usually the main problem with building a friendly GraphQL API is that it can be easy to build a schema that allows clients to ask for lots of data that involves lots of leaf fetches. 
+For example, a client might query a list of Payments and for each payment in the result set the client could be asking for details about both the Person receiving the Payment and the Company sending the payment. 
+Usually this would mean that the GraphQL application layer would first query the database for the list of Payments and would then iterate through the list and make a subsequent query into the database for each Person and for each Company. 
+This can easily lead to an explosion of network round trips, elongated search times and can really hurt performance and scalability.
 
 GAGA's solution to this problem is to leverage [ArangoDB](https://www.arangodb.com/) which is just a brilliant bit of [both product design and technical engineering](https://www.tutorialspoint.com/arangodb/arangodb_advantages.htm).
 
