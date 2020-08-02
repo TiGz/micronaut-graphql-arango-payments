@@ -9,7 +9,7 @@ Introducing a new extensible architecture for rapid application development that
 ### Why GraphQL is a better choice than REST for a new API
 Here is a [great intro to GraphQL](https://www.imaginarycloud.com/blog/graphql-vs-rest) which goes into much more depth than I will here.
 
-The main advantages of a GraphQL combine together to create both a superior client application development experience and a more performant mobile/web app:
+The main advantages of a GraphQL combine to create both a superior client application development experience and a more performant mobile/web app:
 * The schema defines the interface between client and server in a standardised manner
 * The schema is fully and interactively explorable via the GraphIQL explorer/console
 * Each client is in full control of the data they request which makes for a faster UI 
@@ -23,7 +23,7 @@ Here is an example of GraphiQL in action with the Github API:
 ### How GAGA handles the GraphQL query performance problem
 Usually the main problem with building a friendly GraphQL API is that it can be easy to build a schema that allows clients to ask for lots of data that involves lots of leaf fetches. 
 For example, a client might query a list of Payments and for each payment in the result set the client could be asking for details about both the Person receiving the Payment and the Company sending the payment. 
-Usually this would mean that the GraphQL application layer would first query the database for the list of Payments and would then iterate through the list and make a subsequent query into the database for each Person and for each Company. 
+Usually this would mean the GraphQL application layer would first query the database for the list of Payments and would then iterate through the list and make a subsequent query into the database for each Person and for each Company. 
 This can easily lead to an explosion of network round trips, elongated search times and can really hurt performance and scalability.
 
 GAGA's solution to this problem is to leverage [ArangoDB](https://www.arangodb.com/) which is just a brilliant bit of [both product design and technical engineering](https://www.tutorialspoint.com/arangodb/arangodb_advantages.htm).
@@ -50,7 +50,7 @@ One possible evolution might look like this:
 ### Micronaut and ArangoDB Transactions for the win
 The power of Micronaut is in it's super quick start up time and the ability to build GraalVM native images that allow you to deploy services onto scale-to-zero FaaS style platforms and have sub-second spin up times.
 
-Another great feature of Micronaut is how easiy it is it wire up annotation driven aspects. Unlike most other NoSQL databases, ArangoDB supports [ACID transactions](https://www.arangodb.com/docs/stable/transactions.html) so here is an example of adding ArangoDB transaction management via an annotation:
+Another great feature of Micronaut is how easily it is it wire up annotation driven aspects. Unlike most other NoSQL databases, ArangoDB supports [ACID transactions](https://www.arangodb.com/docs/stable/transactions.html) so here is an example of adding ArangoDB transaction management via an annotation:
 
 	@Documented
 	@Retention(RetentionPolicy.RUNTIME)
@@ -106,7 +106,7 @@ Which allows us to handle mutations by both updating the primary entity collecti
 The service method will write to both the **payment_request** collection and then the **mutation_log** collection but it will do it atomically in a transaction and will rollback if either is unsuccessful. In this way we can build solid and reliable event based services not normally associated with non-relational databases.
 
 ### Summary
-In this article we have shown how a new gateway based architecture could leverage the power of GraphQL while retaining high levels of query performance and how it would support both rapid appication development in the intial phase of a project while also providing the flexibility to mature into a microservices based CQRS style system without impacting the clients too much.
+In this article we have shown how a new gateway based architecture could leverage the power of GraphQL while retaining high levels of query performance and how it would support both rapid application development in the initial phase of a project while also providing the flexibility to mature into a micro-services based CQRS style system without impacting the clients too much.
 
 ### Example Github Repo
 This is a POC project that shows the initial deployment architecture in action in an imagined payments platform: [https://github.com/TiGz/micronaut-graphql-arango-payments](https://github.com/TiGz/micronaut-graphql-arango-payments)
