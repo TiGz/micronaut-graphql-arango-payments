@@ -32,6 +32,43 @@ One of Arango's secret weapons is that you can install arbitrary Javascript code
 
 So for GAGA we create a GraphQL [Foxx Microservice](https://www.arangodb.com/docs/stable/foxx.html) which we then deploy into ArangoDB and we proxy incoming query requests through to it so that each leaf fetch is co-located with the data and the whole response is packaged up and sent back with a single network hop. This strategy allows us to vastly reduce query time for complex queries and to handle much more throughput generally.
 
+The Foxx service uses the graphql js library to define the query schema starting at [rootSchema.js](./foxx-public-query-service/src/graphql/rootSchema.js) and importing each component in turn.
+
+An example for querying a list of currencies and fetching a currency by code is [currencyQuery.js](./foxx-public-query-service/src/graphql/models/currency/currencyQuery.js):
+
+    const gql = require('graphql-sync');
+    const currencySchema = require('./currencySchema');
+    const dbDriver = require('../../../database/driver');
+    
+    module.exports = {
+    
+      getCurrencies: {
+        type: new gql.GraphQLList(currencySchema.Currency),
+        description: 'Return all currencies in the database',
+        resolve() {
+          return dbDriver.currencyItems.all();
+        },
+      },
+    
+      getCurrencyByCode: {
+        type: currencySchema.Currency,
+        description: 'Get an Currency by its ID',
+        args: {
+          code: {
+            description: 'The 3 letter currency code',
+            type: new gql.GraphQLNonNull(gql.GraphQLString),
+          },
+        },
+        resolve(root, args) {
+          return dbDriver.currencyItems.firstExample({
+            _key: args.code,
+          });
+        },
+      },
+    };
+
+You can see that each query is handled by an associated call into the ArangoDB database to fetch the appropriate data.
+
 ### Extensibility and how GAGA does CQRS
 Mutations are not directly proxied into ArangoDB as there is no performance issue here. So in essence we are implementing the [Command Query Responsibility Segregation](https://microservices.io/patterns/data/cqrs.html) pattern. The ArangoDB instance always handles the queries but the mutations can be handled in a number of ways including:
 * The gateway service updates ArangoDB directly
@@ -46,6 +83,48 @@ At the beginning of a new project it probably makes most sense to treat the syst
 One possible evolution might look like this:
 
 ![enter image description here](https://docs.google.com/drawings/d/e/2PACX-1vR6BRz86soqMTh1PjPu9K-kttaM82ppxXN34xGlMpyXLlHlw_8Qin6u-Huok_-YGeidc9kIrdM-BwBS/pub?w=889&h=567)
+
+We define the mutation schema as a [set of resources](./micronaut-graphql-api/src/main/resources/graphql) in the gateway service and we use the GraphQL Java lib to expose the mutation endpoint:
+
+    @Factory
+    @Slf4j
+    public class PublicMutationGraphQLFactory {
+    
+        @Bean
+        @Singleton
+        @Context
+        public GraphQL graphQL(ResourceResolver resourceResolver,
+                               List<PublicMutationDataFetcher> mutationDataFetchers) {
+    
+            SchemaParser schemaParser = new SchemaParser();
+            SchemaGenerator schemaGenerator = new SchemaGenerator();
+    
+            // Parse the schemas
+            TypeDefinitionRegistry typeRegistry = new TypeDefinitionRegistry();
+            typeRegistry.merge(schemaParser.parse(resourceToReader(resourceResolver, "classpath:graphql/mutation/paymentRequest.graphqls")));
+            typeRegistry.merge(schemaParser.parse(resourceToReader(resourceResolver, "classpath:graphql/mutation/root.graphqls")));
+    
+            Map<String, DataFetcher> mutationFetchers = mutationDataFetchers.stream()
+                    .collect(Collectors.toMap(MutationDataFetcher::getName, Function.identity()));
+    
+            // Create the runtime wiring for all the injected data fetchers
+            RuntimeWiring wiring = RuntimeWiring.newRuntimeWiring()
+                    .type("Mutation", tw -> tw.dataFetchers(mutationFetchers))
+                    .build();
+    
+            // Create the executable schema.
+            GraphQLSchema graphQLSchema = schemaGenerator.makeExecutableSchema(typeRegistry, wiring);
+    
+            // Return the GraphQL bean.
+            return GraphQL.newGraphQL(graphQLSchema).build();
+        }
+    
+        private Reader resourceToReader(ResourceResolver resourceResolver, String path){
+            return new BufferedReader(new InputStreamReader(resourceResolver.getResourceAsStream(path).get()));
+        }
+    }
+    
+And we define an [interface](./micronaut-graphql-api/src/main/java/com/tigz/graphql/mutation/PublicMutationDataFetcher.java) that allows us to wire up any arbitrary class to handle a specific mutation request.
 
 ### Micronaut and ArangoDB Transactions for the win
 The power of Micronaut is in it's super quick start up time and the ability to build GraalVM native images that allow you to deploy services onto scale-to-zero FaaS style platforms and have sub-second spin up times.
