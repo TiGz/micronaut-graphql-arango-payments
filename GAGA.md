@@ -84,7 +84,7 @@ One possible evolution might look like this:
 
 ![enter image description here](https://docs.google.com/drawings/d/e/2PACX-1vR6BRz86soqMTh1PjPu9K-kttaM82ppxXN34xGlMpyXLlHlw_8Qin6u-Huok_-YGeidc9kIrdM-BwBS/pub?w=889&h=567)
 
-We define the mutation schema as a [set of resources](./micronaut-graphql-api/src/main/resources/graphql) in the gateway service and we use the GraphQL Java lib to expose the mutation endpoint:
+We define the mutation schema as a [set of resources](./micronaut-graphql-api/src/main/resources/graphql/mutation) in the gateway service and we use the GraphQL Java lib to expose the mutation endpoint:
 
     @Factory
     @Slf4j
